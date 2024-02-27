@@ -1,0 +1,53 @@
+﻿@model HomePageViewModel
+<!-- Page Content -->
+<div class="container">
+
+    <div class="row">
+
+        <!-- Blog Entries Column -->
+        <div class="col-md-8">
+
+            <h1 class="my-4">
+                LIT Blog
+                <small>Nothing to see here...</small>
+            </h1>
+
+            @foreach (BlogPost post in Model.Posts)
+            {
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h2 class="card-title">
+                            <a style="text-decoration:none;" href="/home/viewblog?id=@post.Id">@post.Title</a>
+                        </h2>
+                        <p class="card-text">@(post.Content.Length < 200 ? post.Content : post.Content.Substring(0,200) + "....." )</p>
+                        <a href="/home/viewblog?id=@post.Id" class="btn btn-primary">Read More &rarr;</a>
+                    </div>
+                    <div class="card-footer text-muted">
+                        Posted on @post.DateCreated.ToLongDateString() by
+                        Avrumi Friedman
+                    </div>
+                </div>
+
+            }
+
+            <!-- Pagination -->
+            <ul class="pagination justify-content-center mb-4">
+                @if (Model.OlderPage.HasValue)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="/home/index?page=@Model.OlderPage">&larr; Older</a>
+                    </li>
+                }
+                @if (Model.NewerPage.HasValue)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="/home/index?page=@Model.NewerPage">Newer &rarr;</a>
+                    </li>
+                }
+            </ul>
+
+        </div>
+    </div>
+    <!-- /.row -->
+
+</div>
